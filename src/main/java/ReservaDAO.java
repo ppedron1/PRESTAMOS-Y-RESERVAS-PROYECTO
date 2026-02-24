@@ -27,13 +27,16 @@ public class ReservaDAO {
     }
 
     public void mostrarAulas() throws SQLException {
-        String sql = "SELECT idAula, nombreAula, estaDisponible FROM AULAS";
-        try (Connection conn = ConexionDB.conectar(); Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
-            System.out.println("\n--- ESTADO DE AULAS ---");
-            while (rs.next()) {
-                String estado = rs.getBoolean("estaDisponible") ? "OCUPADA" : "LIBRE";
-                System.out.println("ID: " + rs.getInt("idAula") + " | " + rs.getString("nombreAula") + " | " + estado);
-            }
+    String sql = "SELECT idAula, nombreAula, estaDisponible FROM AULAS";
+    try (Connection conn = ConexionDB.conectar(); 
+        Statement st = conn.createStatement(); 
+        ResultSet rs = st.executeQuery(sql)) {
+        
+        System.out.println("\n--- ESTADO DE AULAS ---");
+        while (rs.next()) {
+            String estado = rs.getBoolean("estaDisponible") ? "LIBRE" : "OCUPADA";
+            System.out.println("ID: " + rs.getInt("idAula") + " | " + rs.getString("nombreAula") + " | " + estado);
         }
     }
+}
 }
