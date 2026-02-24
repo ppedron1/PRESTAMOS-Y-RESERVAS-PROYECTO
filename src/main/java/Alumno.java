@@ -2,7 +2,7 @@ public class Alumno extends Usuario {
     private String expediente;
 
     public Alumno(int id, String dni, String nombre, String apellido, String email, String expediente) {
-        super(id, dni, nombre, apellido, email);
+        super(id, dni, nombre, apellido, email,1, "");
         this.expediente = expediente;
     }
     

@@ -1,8 +1,8 @@
 public class Profesor extends Usuario {
     private String departamento;
 
-    public Profesor(int id, String dni, String nombre, String apellido, String email, String departamento) {
-        super(id, dni, nombre, apellido, email);
+    public Profesor(int id, String dni, String nombre, String apellido, String email, int telefonoOInt, String direccion, String departamento) {
+        super(id, dni, nombre, apellido, email, 2,"");
         this.departamento = departamento;
     }
     

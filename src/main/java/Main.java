@@ -8,6 +8,22 @@ public class Main {
         PrestamoDAO pDAO = new PrestamoDAO();
         ExportadorXML xDAO = new ExportadorXML();
         
+        System.out.println("\n===== BIENVENIDO AL SISTEMA =====");
+        System.out.println("¿Qué tipo de usuario eres?");
+        System.out.println("1. Alumno");
+        System.out.println("2. Profesor");
+        System.out.print("Selecciona tu tipo (1 o 2): ");
+        int tipoUsuario = Integer.parseInt(sc.nextLine());
+        
+        if (tipoUsuario != 1 && tipoUsuario != 2) {
+            System.out.println("Opción inválida. Por favor, selecciona 1 o 2.");
+            sc.close();
+            return;
+        }
+        
+        String tipoUsuarioTexto = tipoUsuario == 1 ? "Alumno" : "Profesor";
+        System.out.println("Conectado como: " + tipoUsuarioTexto + "\n");
+        
         int opcion = -1;
 
         while (opcion != 0) {
@@ -26,9 +42,12 @@ public class Main {
                     case 1:
                         System.out.print("DNI: "); String dni = sc.nextLine();
                         System.out.print("Nombre: "); String nom = sc.nextLine();
+                        System.out.print("Apellido: "); String apellido = sc.nextLine();
+                        System.out.print("Email: "); String email = sc.nextLine();
+                        System.out.print("ID Tipo (1-Alumno, 2-Profesor): "); int idTipo = Integer.parseInt(sc.nextLine());
                         System.out.print("Expediente: "); String exp = sc.nextLine();
-                        uDAO.insertarAlumno(new Alumno(0, dni, nom, "", "", exp));
-                        System.out.println("Alumno creado.");
+                        uDAO.insertarAlumno(new Usuario(idTipo, dni, nom, apellido, email, idTipo, exp) {});
+                        System.out.println("Usuario creado.");
                         break;
                     case 2:
                         rDAO.mostrarAulas(); 
@@ -42,7 +61,7 @@ public class Main {
                     case 4:
                         System.out.print("ID Usuario: "); int uP = Integer.parseInt(sc.nextLine());
                         System.out.print("ID Equipo: "); int eP = Integer.parseInt(sc.nextLine());
-                        pDAO.nuevoPrestamo(uP, eP); // Punto 3 del PDF [cite: 31]
+                        pDAO.nuevoPrestamo(uP, eP); 
                         System.out.println("Préstamo registrado.");
                         break;
                     case 5:

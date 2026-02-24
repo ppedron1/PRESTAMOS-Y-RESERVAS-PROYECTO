@@ -1,51 +1,35 @@
-import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 
 public class ExportadorXML {
     public void generarXMLReservas() {
-        try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            Document doc = builder.newDocument();
-            Element root = doc.createElement("reservas");
-            doc.appendChild(root);
-
-            Connection conn = ConexionDB.conectar();
+        // El bloque try-with-resources gestiona el cierre de los 3 recursos
+        try (Connection conn = ConexionDB.conectar();
             Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("SELECT * FROM RESERVAS");
+             ResultSet rs = st.executeQuery("SELECT * FROM RESERVAS");
+            PrintWriter writer = new PrintWriter("reservas.xml")) {
 
+            // Encabezado
+            writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            writer.println("<reservas>");
+
+            // Cuerpo
             while (rs.next()) {
-                Element reserva = doc.createElement("reserva");
-                reserva.setAttribute("id", String.valueOf(rs.getInt("idReserva")));
-                
-                Element fecha = doc.createElement("fecha");
-                fecha.appendChild(doc.createTextNode(rs.getString("fecha")));
-                reserva.appendChild(fecha);
-
-                root.appendChild(reserva);
+                writer.println("  <reserva id=\"" + rs.getInt("idReserva") + "\">");
+                writer.println("    <fecha>" + rs.getString("fecha") + "</fecha>");
+                writer.println("  </reserva>");
             }
 
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            DOMSource source = new DOMSource(doc);
-            StreamResult result = new StreamResult(new File("reservas.xml"));
-            transformer.transform(source, result);
+            // Cierre
+            writer.println("</reservas>");
+            System.out.println("Archivo 'reservas.xml' generado correctamente.");
 
-            System.out.println("Archivo reservas.xml generado con éxito.");
-        } catch (Exception e) {
-            System.out.println("Error al exportar XML: " + e.getMessage());
+        } catch (SQLException | IOException e) {
+            System.err.println("Error en el proceso: " + e.getMessage());
         }
     }
 }

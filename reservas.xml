@@ -1,1 +1,12 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><reservas/>
+<?xml version="1.0" encoding="UTF-8"?>
+<reservas>
+  <reserva id="3">
+    <fecha>2026-02-18 11:58:07</fecha>
+  </reserva>
+  <reserva id="6">
+    <fecha>2026-02-23 17:41:43</fecha>
+  </reserva>
+  <reserva id="7">
+    <fecha>2026-02-23 19:05:13</fecha>
+  </reserva>
+</reservas>
