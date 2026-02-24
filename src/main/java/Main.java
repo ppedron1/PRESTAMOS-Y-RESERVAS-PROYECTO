@@ -36,6 +36,7 @@ public class Main {
             System.out.println("5. Exportar Reservas y Prestamos a XML");
             System.out.println("6. Ver Estadísticas de Reservas por Día");
             System.out.println("7. Informes de Usuarios y Equipos");
+            System.out.println("8. Liberar Aula");
             System.out.println("0. Salir");
             System.out.print("Seleccione: ");
             
@@ -79,6 +80,11 @@ public class Main {
                     case 7:
                         rDAO.informeUsuariosMasActivos();
                         pDAO.informeEquiposMasPrestados();
+                        break;
+                    case 8:
+                        System.out.print("ID Aula a liberar: "); 
+                        int idAulaLiberar = Integer.parseInt(sc.nextLine());
+                        rDAO.liberarAula(idAulaLiberar); 
                         break;
                     case 0:
                         System.out.println("Saliendo del sistema...");
