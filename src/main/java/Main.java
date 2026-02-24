@@ -36,6 +36,8 @@ public class Main {
             System.out.println("5. Exportar Reservas y Prestamos a XML");
             System.out.println("6. Ver Estadísticas de Reservas por Día");
             System.out.println("7. Informes de Usuarios y Equipos");
+            System.out.println("8. Liberar Aula");
+            System.out.println("9. Devolver Equipo");
             System.out.println("0. Salir");
             System.out.print("Seleccione: ");
             
@@ -56,8 +58,11 @@ public class Main {
                         rDAO.mostrarAulas(); 
                         break;
                     case 3:
+                        System.out.println("\n--- Aulas Disponibles para Reservar ---");
+                        rDAO.mostrarAulas(); // Te muestra la lista con los IDs reales y si están libres o no
+                        System.out.println("---------------------------------------");
                         System.out.print("ID Usuario: "); int idU = Integer.parseInt(sc.nextLine());
-                        System.out.print("ID Aula: "); int idA = Integer.parseInt(sc.nextLine());
+                        System.out.print("ID Aula a reservar (elige uno de la lista): "); int idA = Integer.parseInt(sc.nextLine());
                         rDAO.hacerReserva(idU, idA); 
                         System.out.println("Reserva realizada.");
                         break;
@@ -79,6 +84,16 @@ public class Main {
                     case 7:
                         rDAO.informeUsuariosMasActivos();
                         pDAO.informeEquiposMasPrestados();
+                        break;
+                    case 8:
+                        System.out.print("ID Aula a liberar: "); 
+                        int idAulaLiberar = Integer.parseInt(sc.nextLine());
+                        rDAO.liberarAula(idAulaLiberar); 
+                        break;
+                    case 9:
+                        System.out.print("ID Equipo a devolver: "); 
+                        int idEq = Integer.parseInt(sc.nextLine());
+                        pDAO.devolverEquipo(idEq); 
                         break;
                     case 0:
                         System.out.println("Saliendo del sistema...");

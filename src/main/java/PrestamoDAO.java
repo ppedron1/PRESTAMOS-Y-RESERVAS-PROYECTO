@@ -18,6 +18,22 @@ public class PrestamoDAO {
             ps.executeUpdate();
         }
     }
+    public void devolverEquipo(int idEquipo) throws SQLException {
+    String sql = "UPDATE PRESTAMOS SET fechaDevolucion = NOW() WHERE idEquipo = ? AND fechaDevolucion IS NULL";
+    
+    try (Connection conn = ConexionDB.conectar(); 
+        PreparedStatement ps = conn.prepareStatement(sql)) {
+        
+        ps.setInt(1, idEquipo);
+        int filas = ps.executeUpdate();
+        
+        if (filas > 0) {
+            System.out.println("Equipo " + idEquipo + " devuelto correctamente.");
+        } else {
+            System.out.println("Error: El equipo no estaba prestado o el ID no existe.");
+        }
+    }
+}
     // para estadisticas Xpath
 public void informeEquiposMasPrestados() throws SQLException {
     String sql = "SELECT idEquipo, COUNT(*) as total FROM PRESTAMOS GROUP BY idEquipo ORDER BY total DESC";

@@ -39,6 +39,21 @@ public class ReservaDAO {
         }
     }
 }
+public void liberarAula(int idAula) throws SQLException {
+    String sqlAula = "UPDATE AULAS SET estaDisponible = TRUE WHERE idAula = ?";
+    
+    try (Connection conn = ConexionDB.conectar(); 
+        PreparedStatement psA = conn.prepareStatement(sqlAula)) {
+        psA.setInt(1, idAula);
+        int filasActualizadas = psA.executeUpdate();
+        
+        if (filasActualizadas > 0) {
+            System.out.println("Aula " + idAula + " liberada con éxito. Vuelve a estar disponible.");
+        } else {
+            System.out.println("No se ha encontrado el aula o ya estaba libre.");
+        }
+    }
+}
 // para las estadisticas
 public void informeUsuariosMasActivos() throws SQLException {
     String sql = "SELECT idUsuario, COUNT(*) as total FROM RESERVAS GROUP BY idUsuario ORDER BY total DESC LIMIT 5";
