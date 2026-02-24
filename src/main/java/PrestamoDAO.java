@@ -1,4 +1,9 @@
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class PrestamoDAO {
@@ -13,4 +18,14 @@ public class PrestamoDAO {
             ps.executeUpdate();
         }
     }
+    // para estadisticas Xpath
+public void informeEquiposMasPrestados() throws SQLException {
+    String sql = "SELECT idEquipo, COUNT(*) as total FROM PRESTAMOS GROUP BY idEquipo ORDER BY total DESC";
+    try (Connection conn = ConexionDB.conectar(); Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+        System.out.println("\n--- EQUIPOS MÁS SOLICITADOS ---");
+        while (rs.next()) {
+            System.out.println("ID Equipo: " + rs.getInt("idEquipo") + " | Veces prestado: " + rs.getInt("total"));
+        }
+    }
+}
 }

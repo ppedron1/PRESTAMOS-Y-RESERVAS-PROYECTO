@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<prestamos>
+  <prestamo id="1">
+    <usuario>2</usuario>
+    <equipo>2</equipo>
+    <salida>2026-02-17 20:38:02</salida>
+  </prestamo>
+  <prestamo id="2">
+    <usuario>3</usuario>
+    <equipo>3</equipo>
+    <salida>2026-02-24 09:12:30</salida>
+  </prestamo>
+  <prestamo id="3">
+    <usuario>3</usuario>
+    <equipo>4</equipo>
+    <salida>2026-02-24 22:22:26</salida>
+  </prestamo>
+</prestamos>

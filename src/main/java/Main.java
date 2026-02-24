@@ -7,6 +7,7 @@ public class Main {
         ReservaDAO rDAO = new ReservaDAO();
         PrestamoDAO pDAO = new PrestamoDAO();
         ExportadorXML xDAO = new ExportadorXML();
+        AnalizadorEstadisticas stats = new AnalizadorEstadisticas();
         
         System.out.println("\n===== BIENVENIDO AL SISTEMA =====");
         System.out.println("¿Qué tipo de usuario eres?");
@@ -32,7 +33,9 @@ public class Main {
             System.out.println("2. Ver Estado de Aulas (Resumen Visual)");
             System.out.println("3. Reservar Aula");
             System.out.println("4. Prestar Equipo");
-            System.out.println("5. Exportar Reservas a XML");
+            System.out.println("5. Exportar Reservas y Prestamos a XML");
+            System.out.println("6. Ver Estadísticas de Reservas por Día");
+            System.out.println("7. Informes de Usuarios y Equipos");
             System.out.println("0. Salir");
             System.out.print("Seleccione: ");
             
@@ -65,7 +68,17 @@ public class Main {
                         System.out.println("Préstamo registrado.");
                         break;
                     case 5:
-                        xDAO.generarXMLReservas(); 
+                        xDAO.generarXMLReservas();
+                        xDAO.generarXMLPrestamos();
+                        break;
+                    case 6:
+                        System.out.print("Introduce fecha (YYYY-MM-DD) para estadísticas: ");
+                        String fecha = sc.nextLine();
+                        stats.contarReservasPorDia(fecha);
+                        break;
+                    case 7:
+                        rDAO.informeUsuariosMasActivos();
+                        pDAO.informeEquiposMasPrestados();
                         break;
                     case 0:
                         System.out.println("Saliendo del sistema...");

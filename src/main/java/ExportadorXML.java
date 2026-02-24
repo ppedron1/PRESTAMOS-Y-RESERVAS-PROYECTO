@@ -32,4 +32,25 @@ public class ExportadorXML {
             System.err.println("Error en el proceso: " + e.getMessage());
         }
     }
+    public void generarXMLPrestamos() {
+    try (Connection conn = ConexionDB.conectar();
+        Statement st = conn.createStatement();
+        ResultSet rs = st.executeQuery("SELECT * FROM PRESTAMOS");
+        PrintWriter writer = new PrintWriter("prestamos.xml")) {
+
+        writer.println("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        writer.println("<prestamos>");
+        while (rs.next()) {
+            writer.println("  <prestamo id=\"" + rs.getInt("idPrestamo") + "\">");
+            writer.println("    <usuario>" + rs.getInt("idUsuario") + "</usuario>");
+            writer.println("    <equipo>" + rs.getInt("idEquipo") + "</equipo>");
+            writer.println("    <salida>" + rs.getString("fechaSalida") + "</salida>");
+            writer.println("  </prestamo>");
+        }
+        writer.println("</prestamos>");
+        System.out.println("Archivo 'prestamos.xml' generado correctamente.");
+    } catch (SQLException | IOException e) {
+        System.err.println("Error: " + e.getMessage());
+    }
+}
 }

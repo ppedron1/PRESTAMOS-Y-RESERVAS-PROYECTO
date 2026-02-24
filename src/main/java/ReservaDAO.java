@@ -39,4 +39,14 @@ public class ReservaDAO {
         }
     }
 }
+// para las estadisticas
+public void informeUsuariosMasActivos() throws SQLException {
+    String sql = "SELECT idUsuario, COUNT(*) as total FROM RESERVAS GROUP BY idUsuario ORDER BY total DESC LIMIT 5";
+    try (Connection conn = ConexionDB.conectar(); Statement st = conn.createStatement(); ResultSet rs = st.executeQuery(sql)) {
+        System.out.println("\n--- TOP USUARIOS CON MÁS RESERVAS ---");
+        while (rs.next()) {
+            System.out.println("ID Usuario: " + rs.getInt("idUsuario") + " | Total: " + rs.getInt("total"));
+        }
+    }
+}
 }
