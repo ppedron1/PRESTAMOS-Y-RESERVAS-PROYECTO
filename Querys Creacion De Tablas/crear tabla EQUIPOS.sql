@@ -1,0 +1,7 @@
+CREATE TABLE EQUIPOS (
+    idEquipo INT AUTO_INCREMENT PRIMARY KEY,
+    numeroMAC VARCHAR(17) UNIQUE,
+    estado VARCHAR(50),
+    idTipo INT,
+    CONSTRAINT fk_equipo_tipo FOREIGN KEY (idTipo) REFERENCES TIPOEQUIPO(idTipoEquipo)
+);
